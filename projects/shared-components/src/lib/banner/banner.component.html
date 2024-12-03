@@ -1,0 +1,21 @@
+<div [class]="Primary">
+    <!-- Icon and Message -->
+    <div class="flex items-center space-x-2">
+      <div class="icon-container">
+        <img [src]="imgIcon" alt="Icon" class="h-6 w-6" />
+      </div>
+      <div class="message-container">
+        <!-- Apply textClass directly to the span for the message -->
+        <span [class]="bigText">{{ message }}</span>
+        <!-- <span [class]="smallTextZ">{{ smallText }}</span> -->
+      </div>
+    </div>
+    <!-- <ng-content></ng-content>  -->
+    <!-- Button -->
+    <lib-button
+      [buttonText]="buttonText"
+      variant="blackReviewButton"
+      [size]="size"
+      (onClick)="bannerClick()"
+    ></lib-button>
+</div>

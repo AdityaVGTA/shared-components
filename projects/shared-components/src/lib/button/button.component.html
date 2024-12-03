@@ -1,0 +1,55 @@
+<!-- <button
+  [class]="buttonClasses"
+  [disabled]="isDisabled"
+  (click)="handleClick()"
+>
+  {{ buttonText }}
+</button> -->
+
+<!-- // use this one  -->
+
+<!-- ------------ approach 1 ------------------- -->
+<!-- using ng-content -->
+<button [class]="buttonClasses" [disabled]="isDisabled" (click)="handleClick()">
+    {{ imgIcon }}
+    <ng-content></ng-content>
+    {{ buttonText }}
+  </button>
+  
+  <!-- ------------ approach 2 ------------------- -->
+  <!-- app-button.component.html -->
+  <!-- <button
+    [disabled]="isDisabled"
+    (click)="handleClick()"
+    [class]="buttonClasses"
+  > -->
+  <!-- <ng-container *ngIf="imgIcon">
+      <img [src]="imgIcon" alt="Icon" class="h-6 w-6 mr-2" />
+    </ng-container>
+    {{ buttonText }}
+    <ng-content></ng-content>
+  </button> -->
+  <!-- Projected content (text or other elements) -->
+  
+  <!-- ------------ approach 3 ------------------- -->
+  <!-- <button
+    [disabled]="isDisabled"
+    (click)="handleClick()"
+    [class]="buttonClasses"
+  >
+    <ng-container *ngIf="imgIcon">
+      <img [src]="imgIcon" alt="Icon" class="h-6 w-6 {{ getPositionClasses() }}" />
+    </ng-container>
+  
+    <ng-content></ng-content>
+    {{ buttonText }}
+    
+  </button> -->
+  
+  <!-- <button
+    [class]="'w-50 h-20 text-white bg-black rounded-md ' + customClasses"
+    [disabled]="isDisabled"
+    (click)="handleClick()"
+  >
+    {{ buttonText }}
+  </button> -->

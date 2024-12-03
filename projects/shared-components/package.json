@@ -1,0 +1,19 @@
+{
+  "name": "shared-components",
+  "version": "0.0.1",
+  "description": "A reusable shared-component library for GCC",
+  "main": "bundles/shared-components.umd.js",  
+  "module": "fesm2015/shared-components.mjs",  
+  "es2015": "fesm2015/shared-components.mjs", 
+  "typings": "shared-components.d.ts",        
+  "peerDependencies": {
+    "@angular/common": "^18.2.0",
+    "@angular/core": "^18.2.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "author": "Aditya Barangali",
+  "license": "MIT"
+}
