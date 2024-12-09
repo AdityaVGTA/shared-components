@@ -1,7 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'lib-button',
+  imports: [CommonModule],
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.css'],
   standalone: true,
@@ -12,12 +14,12 @@ export class ButtonComponent {
   @Input() variant = 'default'; // Variant ('primary', 'secondary', etc.)
   @Input() size = 'base'; // Size ('sm', 'base', 'lg', 'icon')
   @Input() position = ''; // Position ('left', 'right', 'up', 'down')
-  @Input() isDisabled = false; // Disabled state
+  @Input() isDisabled = true; // Disabled state
   @Output() onClick = new EventEmitter<void>(); // Click event emitter
 
   // Function to combine base classes with variant and size-specific classes
   get buttonClasses(): string {
-    const baseClasses = `group flex items-center justify-center rounded-md web:ring-offset-background web:transition-colors web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2`;
+    const baseClasses = `group flex items-center justify-center rounded-md web:ring-offset-background web:transition-colors web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-8`;
     const variantClasses = this.getVariantClasses();
     const sizeClasses = this.getSizeClasses();
     const positionClasses = this.getPositionClasses();
@@ -27,16 +29,19 @@ export class ButtonComponent {
   // Variant classes based on the selected variant
   private getVariantClasses(): string {
     const variants: Record<string, string> = {
-      primary: 'bg-secondary text-white hover:bg-secondary-hover active:bg-secondary-selected',
-      secondary: 'bg-success text-white hover:bg-success-hover active:bg-success-selected',
-      alternate: 'bg-error text-white hover:bg-error-hover active:bg-error-selected',
-      'primary-ghost' : 'bg-transparent text-primary',
-      'secondary-ghost': 'bg-transparent text-success',
-      'alternate-ghost': 'bg-transparent text-error',
-      'primary-outline': 'border border-secondary text-secondary hover:bg-secondary-hover active:bg-secondary-selected',
-      'secondary-outline': 'border border-success text-success hover:bg-success-hover active:bg-success-selected',
-      'alternate-outline': 'border border-error text-error hover:bg-error-hover active:bg-error-hover',
-      default: 'bg-green web:hover:opacity-90 active:opacity-90', // default class if no variant is selected
+      primary: 'bg-secondary text-inverse hover:bg-secondary-hover active:bg-secondary-selected disabled:bg-secondary-disabled disabled:cursor-not-allowed disabled:text-bd-disabled',
+      secondary: 'bg-success text-white hover:bg-success-bg active:bg-success-selected disabled:bg-success-disabled  disabled:text-white  disabled:cursor-not-allowed',
+      alternate: 'bg-error text-white hover:bg-error-bg active:bg-error-selected disabled:bg-error-disabled  disabled:text-white  disabled:cursor-not-allowed',
+      'primary-ghost' : 'bg-transparent text-secondary disabled:text-secondary-disabled  disabled:cursor-not-allowed',
+      'secondary-ghost': 'bg-transparent text-success disabled:text-success-disabled  disabled:cursor-not-allowed',
+      'alternate-ghost': 'bg-transparent text-error disabled:text-alternate-disabled  disabled:cursor-not-allowed',
+      'primary-outline': 'border border-secondary text-inverse hover:bg-secondary-hover active:bg-secondary-selected disabled:border-secondary-disabled  disabled:text-bd-disabled  disabled:cursor-not-allowed',
+      'secondary-outline': 'border border-success text-inverse hover:bg-success-bg active:bg-success-selected disabled:border-success-disabled  disabled:text-bd-disabled  disabled:cursor-not-allowed',
+      'alternate-outline': 'border border-error text-inverse hover:bg-error-bg active:bg-error-hover disabled:border-error-disabled  disabled:text-bd-disabled  disabled:cursor-not-allowed',
+      'contrast-dark': 'bg-black text-white border-white disabled:text-bd-disabled  disabled:cursor-not-allowed',
+      'contrast-light':'bg-neutral-200 text-black border-black disabled:text-neutral-400  disabled:cursor-not-allowed',
+      'contrast-outline':'bg-transparent text white disabled:text-neutral-400  disabled:cursor-not-allowed',
+      default: 'bg-secondary text-inverse hover:bg-secondary-hover active:bg-secondary-selected disabled:bg-secondary-disabled disabled:cursor-not-allowed disabled:text-bd-disabled', // default class if no variant is selected
     };
     return variants[this.variant] || variants['default'];
   }
@@ -44,25 +49,25 @@ export class ButtonComponent {
   // Size classes based on the selected size
   private getSizeClasses(): string {
     const sizes: Record<string, string> = {
-      sm: 'h-[3.2rem] min-w-[3.2rem] w-[7.9rem] px-[1rem]', // Width: 7.9rem, Height: 3.2rem
-      base: 'h-[4.0rem] min-w-[4.0rem] w-[8.6rem] px-[1rem]', // Width: 8.6rem, Height: 4.0rem
-      lg: 'h-[4.8rem] min-w-[4.8rem] w-[9.3rem] px-[1.2rem]', // Width: 9.3rem, Height: 4.8rem
-      icon: 'h-[3.2rem] min-w-[3.2rem] w-[3.2rem] px-[0.8rem]', // Icon size with fixed width and height
+      sm: 'h-[3.2rem] min-w-[3.2rem] px-[1rem] body_sans_s font-semibold', // Width: 7.9rem, Height: 3.2rem
+      base: 'h-[4.0rem] min-w-[4.0rem] px-[1rem] body_sans_m font-semibold', // Width: 8.6rem, Height: 4.0rem
+      lg: 'h-[4.8rem] min-w-[4.8rem] px-[1.2rem] body_sans_l font-semibold', // Width: 9.3rem, Height: 4.8rem
+      icon: 'h-[3.2rem] min-w-[3.2rem] px-[0.8rem]', // Icon size with fixed width and height
     };
     return sizes[this.size] || sizes['base']; // Default to base if the size is not defined
   }
 
   // Position classes based on the position prop
-  private getPositionClasses(): string {
+  getPositionClasses(): string {
     const positions: Record<string, string> = {
-      left: 'order-first', // Text first, image second (image on the left)
-      right: 'order-last', // Text first, image second (image on the right)
-      up: 'flex-col-reverse', // Text first, image second (image above)
-      down: 'flex-col', // Text first, image second (image below)
+      left: 'flex-row', // Image on the left
+      right: 'flex-row-reverse', // Image on the right
+      up: 'flex-col', // Image above the text
+      down: 'flex-col-reverse', // Image below the text
     };
-    return positions[this.position] || ''; // Default: no position if not set
+    const positionClass = positions[this.position] || '';
+    return positionClass;
   }
-
   // Handle click event and emit if not disabled
   handleClick() {
     if (!this.isDisabled) {

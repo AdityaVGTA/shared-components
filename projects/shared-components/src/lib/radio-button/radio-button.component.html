@@ -1,0 +1,11 @@
+<div class="flex flex-col gap-5">
+    <div *ngFor="let data of radioValues">
+        <div class="flex flex-col gap-2">
+            <div class="flex gap-2 items-center">
+                <input type="radio" [checked]="data.state" [disabled]="data.disabled" [name]="name" id="" [ngClass]="getRadioSize()" class="radio-check" (click)="onValueSelect(data.radioName)">
+                <p [ngClass]="getLabelSize()">{{data.radioName}}</p>
+            </div>
+            <p [ngClass]="getHelpSize()">{{data.radioHelpText}}</p>
+        </div>
+    </div>
+</div>

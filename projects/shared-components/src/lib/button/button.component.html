@@ -33,18 +33,37 @@
   
   <!-- ------------ approach 3 ------------------- -->
   <button
-    [disabled]="isDisabled"
-    (click)="handleClick()"
-    [class]="buttonClasses"
-  >
-    <ng-container *ngIf="imgIcon">
-      <img [src]="imgIcon" alt="Icon" class="h-6 w-6 {{ getPositionClasses() }}" />
-    </ng-container>
+  [ngClass]="buttonClasses"
+  [disabled]="isDisabled"
+  (click)="handleClick()"
+  class="inline-flex"
+>
+  <!-- Wrapper for image and text -->
+  <div class="flex items-center" [ngClass]="getPositionClasses()">
   
-    <ng-content></ng-content>
-    {{ buttonText }}
-    
-  </button>
+    <!-- Image/Icon -->
+    <ng-container *ngIf="imgIcon">
+      <img
+        *ngIf="imgIcon.startsWith('https')"
+        [src]="imgIcon"
+        alt="icon"
+        class="w-5 h-5"
+      />
+      <span
+        *ngIf="!imgIcon.startsWith('http')"
+        class="material-icons text-[inherit] text-sm"
+      >
+        {{ imgIcon }}
+      </span>
+    </ng-container>
+
+    <!-- Button Text -->
+    <span *ngIf="buttonText" class="px-2">
+      {{ buttonText }}
+    </span>
+  </div>
+</button>
+
   
   <!-- <button
     [class]="'w-50 h-20 text-white bg-black rounded-md ' + customClasses"

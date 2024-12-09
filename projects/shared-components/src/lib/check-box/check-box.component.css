@@ -1,0 +1,95 @@
+.tab-to-list {
+    @apply pl-4 flex flex-col gap-5;
+}
+
+.list-of-checkbox {
+    @apply flex flex-col gap-7;
+}
+
+.medium {
+    div {
+        input[type='checkbox'] {
+            @apply h-10 w-10;
+        }
+
+        label {
+            @apply body_sans_l;
+        }
+    }
+
+    ol li div {
+        input[type='checkbox'] {
+            @apply h-10 w-10;
+        }
+
+        span div img {
+            @apply h-6 w-6;
+        }
+
+        label {
+            @apply body_sans_l;
+        }
+    }
+
+    span {
+        @apply body_sans_s;
+    }
+}
+
+.small {
+    div {
+        input[type='checkbox'] {
+            @apply h-8 w-8;
+        }
+
+        label {
+            @apply body_sans_s;
+        }
+    }
+
+    ol li div {
+        input[type='checkbox'] {
+            @apply h-8 w-8;
+        }
+
+        span div img {
+            @apply h-5 w-5;
+        }
+
+        label {
+            @apply body_sans_s;
+        }
+    }
+
+    span {
+        @apply body_sans_xs;
+    }
+}
+
+.checkbox {
+    @apply appearance-none border-neutral-500 border rounded-md h-10 w-10 cursor-pointer flex justify-center items-center hover:border-secondary hover:bg-secondary-bg-4 checked:bg-secondary disabled:bg-secondary-bg-2 disabled:cursor-not-allowed disabled:text-bd-disabled checked:border-none;
+}
+
+.checkbox:checked:after {
+    display: block;
+}
+
+.checkedClass::after {
+    font-family: 'Font awesome 6 Free';
+    font-weight: 700;
+    font-size: 1.4rem;
+    content: '\f00c';
+    display: none;
+}
+
+.uncheckedClass::after {
+    display: none;
+}
+
+.minusClass::after {
+    font-family: 'Font awesome 6 Free';
+    font-weight: 700;
+    font-size: 1.4rem;
+    content: '\f068';
+    display: none;
+}
