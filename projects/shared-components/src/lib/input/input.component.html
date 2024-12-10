@@ -1,1 +1,63 @@
-<p>input works!</p>
+<div class="flex flex-col pb-6">
+  <div
+    class="container"
+    [ngClass]="{
+      'disabled-control': isDisabled,
+      'border-inputBorderColor': !isDisabled,
+      'border-error': (formControl?.invalid || !isValid) && (formControl?.touched || submitted),
+      'border-success': formControl?.valid && (formControl?.touched || submitted),
+    }"
+  >
+    <div class="input-wrapper">
+      <div class="icon-container">
+        <ng-container *ngIf="icons.length > 0">
+          <img [src]="icons[0]" alt="icon" class="w-10 h-10" />
+        </ng-container>
+ 
+        <!-- Handle both FormControl or ngModel depending on what is provided -->
+        <input
+          [(ngModel)]="inputValue"  
+          [formControl]="formControl"  
+          [placeholder]="helperText"
+          [type]="getInputTypeValue"
+          class="input-field"
+          (input)="onInputChange($event)"  
+          (blur)="onTouchedHandler()"
+          [disabled]="isDisabled"
+          [attr.disabled]="isDisabled ? true : null"
+        />
+ 
+        <ng-container *ngIf="icons.length > 1">
+          <img
+            [src]="icons[1]"
+            alt="icon"
+            class="w-10 h-10"
+            (click)="secondaryImageFunction()"
+          />
+        </ng-container>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- Error handling and validation -->
+  <div *ngIf="formControl?.touched || submitted" class="flex items-center py-2" [ngClass]="{'text-success': isValid, 'text-error': !isValid}">
+    <img
+      *ngIf="validationMessage"
+      [src]="isValid ? 'assets/icons/success.png' : 'assets/icons/error.png'"
+      alt="status-icon"
+      class="pr-2 w-8 h-6"
+    />
+    <ng-container>
+      {{ isValid ? validationMessage : getErrorMessage }}
+    </ng-container>
+  </div>
+ 
+  <div class="helper-text" *ngIf="helperText">
+    {{ helperText }}
+  </div>
+  <span class="bg-transparent text-secondary-text self-start" *ngIf="buttonText" (click)="inputActionButton()">
+    {{
+      buttonText
+    }}
+  </span>
+</div>
