@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, OnInit, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'lib-input',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule,ReactiveFormsModule, FormsModule],
   templateUrl: './input.component.html',
   styleUrl: './input.component.css',
   providers: [
@@ -23,14 +23,14 @@ export class InputComponent implements ControlValueAccessor, OnInit{
   @Input() submitted = false;
   @Input() isValid = false;
   @Input() buttonText = '';
-  @Input() icons: string[] = [];
   @Input() formControl?: any; // Optional formControl input
   @Input() validationMessage = '';
   @Input() getErrorMessage = '';
- 
+  @Input() inputIcon: string[] = [];
+
   @Output() helperButtonAction = new EventEmitter<Event>();
   @Output() secondaryButtonAction = new EventEmitter<Event>();
- 
+  icons: string[] = [];
   inputValue = '';
   getInputTypeValue = '';
   private onChange: (value: any) => void = () => {};
@@ -38,6 +38,7 @@ export class InputComponent implements ControlValueAccessor, OnInit{
  
   ngOnInit() {
     this.getInputTypeValue = this.getInputType(this.inputType);
+    this.initializeIcons();
   }
  
   // Write the value to the input field (for ngModel or FormControl)
@@ -106,4 +107,45 @@ export class InputComponent implements ControlValueAccessor, OnInit{
       this.secondaryButtonAction.emit(); // Emit event to the parent that the button is clicked
     }
   }
+
+  formatPhoneNumber(event: Event) {
+    if (this.inputType === 'phone-number') {
+      let value = (event.target as HTMLInputElement).value.replace(/\D/g, '');
+      if (value.length > 5) {
+        value = value.slice(0, 5) + ' ' + value.slice(5, 10);
+      }
+      this.inputValue = value;
+      (event.target as HTMLInputElement).value = value;
+    }
+  }
+ 
+  getPlaceholder() {
+    switch (this.inputType) {
+      case 'password':
+        return '••••••••••••';
+      case 'number':
+        return 'o o o o o o o o';
+      case 'phone-number':
+        return 'xxxxx xxxxx';
+      default:
+        return 'Placeholder text';
+    }
+  }
+ 
+  initializeIcons() {
+    switch (this.inputType) {
+      case 'default':
+        // this.icons.push('assets/icons/Profile-circle.png', 'assets/icons/microphone.png');
+        this.icons=this.inputIcon
+        break;
+      case 'password':
+        this.icons.push('assets/icons/lock-password.png', 'assets/icons/eye.png');
+        // this.icons=this.inputIcon
+        break;
+      case 'phone-number':
+        this.icons.push('assets/icons/phone.png');
+        break;
+    }
+  }
+ 
 }

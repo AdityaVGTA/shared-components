@@ -3,13 +3,13 @@
     class="container"
     [ngClass]="{
       'disabled-control': isDisabled,
-      'border-inputBorderColor': !isDisabled,
+      'border-input-color': !isDisabled,
       'border-error': (formControl?.invalid || !isValid) && (formControl?.touched || submitted),
       'border-success': formControl?.valid && (formControl?.touched || submitted),
     }"
   >
     <div class="input-wrapper">
-      <div class="icon-container">
+      <div class="flex items-center justify-center">
         <ng-container *ngIf="icons.length > 0">
           <img [src]="icons[0]" alt="icon" class="w-10 h-10" />
         </ng-container>
@@ -18,7 +18,7 @@
         <input
           [(ngModel)]="inputValue"  
           [formControl]="formControl"  
-          [placeholder]="helperText"
+          [placeholder]="getPlaceholder()"
           [type]="getInputTypeValue"
           class="input-field"
           (input)="onInputChange($event)"  
