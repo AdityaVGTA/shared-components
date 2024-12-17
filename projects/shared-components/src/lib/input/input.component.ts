@@ -128,7 +128,7 @@ export class InputComponent implements ControlValueAccessor, OnInit{
       case 'phone-number':
         return 'xxxxx xxxxx';
       default:
-        return 'Placeholder text';
+        return '';
     }
   }
  

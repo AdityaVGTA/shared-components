@@ -1,51 +1,89 @@
-.radio-check{
-    @apply relative appearance-none border border-secondary bg-white rounded-full accent-secondary cursor-pointer;
+.radio-check {
+    position: relative;
+    appearance: none;
+    border: 2px solid var(--color-secondary-5);
+    background-color: #fff;
+    border-radius: 9999px;
+    cursor: pointer;
 }
 
 .radio-check:checked {
-    @apply bg-secondary;
+    background-color: var(--color-secondary-5);
 }
 
 .radio-check:checked::after {
     content: '';
-    @apply absolute top-1/2 left-1/2 w-1/2 h-1/2 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2;  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 50%;
+    background-color: #fff;
+    border-radius: 9999px;
+    transform: translateX(-50%) translateY(-50%);
 }
 
 .radio-check:hover {
-    @apply border-secondary-bg-4;
+    border-color: var(--color-secondary-4);
 }
 
 .radio-check:checked:hover {
-    @apply bg-secondary-bg-4 border-secondary-bg-4;
+    background-color: var(--color-secondary-4);
+    border-color: var(--color-secondary-4);
 }
 
 .radio-check:checked:hover::after {
     content: '';
-    @apply absolute top-1/2 left-1/2 w-1/2 h-1/2 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2;  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 50%;
+    background-color: #fff;
+    border-radius: 9999px;
+    transform: translateX(-50%) translateY(-50%);
 }
 
-.radio-check:active{
-    @apply border-secondary-hover;
+.radio-check:active {
+    border-color: var(--color-secondary-6);
 }
 
 .radio-check:checked:active {
-    @apply border-secondary-hover bg-secondary-hover;
+    border-color: var(--color-secondary-6);
+    background-color: var(--color-secondary-6);
 }
 
 .radio-check:checked:active::after {
     content: '';
-    @apply absolute top-1/2 left-1/2 w-1/2 h-1/2 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2;  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 50%;
+    background-color: #fff;
+    border-radius: 9999px;
+    transform: translateX(-50%) translateY(-50%);
 }
 
 .radio-check:disabled {
-    @apply border-secondary-bg-2;
+    border-color: var(--color-secondary-2);
 }
 
 .radio-check:checked:disabled {
-    @apply border-secondary-bg-2 bg-secondary-bg-2 cursor-default;
+    border-color: var(--color-secondary-2);
+    background-color: var(--color-secondary-2);
+    cursor: default;
 }
 
 .radio-check:checked:disabled::after {
     content: '';
-    @apply absolute top-1/2 left-1/2 w-1/2 h-1/2 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-default;  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 50%;
+    background-color: #fff;
+    border-radius: 9999px;
+    transform: translateX(-50%) translateY(-50%);
+    cursor: default;
 }

@@ -30,7 +30,7 @@ export class LabelComponent {
     };
 
     const variantClasses: Record<string, string> = {
-      'success': 'px-5 text-center whitespace-nowrap text-success rounded-[100px] bg-success-bg border-2 border-success w-[100px]',
+      'success': 'px-5 text-center whitespace-nowrap text-success rounded-[100px] bg-success-bg border-2 border-success w-fit',
       'error': 'px-5 text-center whitespace-nowrap text-error rounded-[100px] bg-error-bg border-2 border-error w-fit',
       'warning': 'px-5 text-center whitespace-nowrap text-warning rounded-[100px] bg-warning-bg border-2 border-warning w-fit',
       'positive': 'px-5 text-center whitespace-nowrap text-alternate rounded-[100px] bg-alternate-bg-0 border-2 border-alternate w-fit',
