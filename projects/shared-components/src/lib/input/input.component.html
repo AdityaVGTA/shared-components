@@ -9,7 +9,12 @@
     }"
   >
     <div class="input-wrapper">
-      <div class="flex items-center justify-center">
+      <div class="flex items-center justify-center"
+      [ngClass]="{
+        'flex items-center justify-center': icons.length > 0,
+        'flex items-center': !icons.length > 0
+      }"
+      >
         <ng-container *ngIf="icons.length > 0">
           <img [src]="icons[0]" alt="icon" class="w-10 h-10" />
         </ng-container>
