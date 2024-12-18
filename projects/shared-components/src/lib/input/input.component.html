@@ -45,7 +45,7 @@
   <div *ngIf="formControl?.touched || submitted" class="flex items-center" [ngClass]="{'text-success': isValid, 'text-error': !isValid}">
     <img
       *ngIf="validationMessage"
-      [src]="isValid ? 'assets/icons/success.png' : 'assets/icons/error.png'"
+      [src]="isValid ? 'assets/icons/success.svg' : 'assets/icons/error.svg'"
       alt="status-icon"
       class="pr-2 w-8 h-6"
     />

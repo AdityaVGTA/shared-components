@@ -45,9 +45,7 @@
     <!-- Image/Icon -->
     <ng-container *ngIf="imgIcon">
       <img *ngIf="imgIcon.startsWith('https')" [src]="imgIcon" alt="icon" class="w-10 h-10" />
-      <span *ngIf="!imgIcon.startsWith('http')" class="material-icons text-[inherit] text-sm">
-        {{ imgIcon }}
-      </span>
+      <img *ngIf="!imgIcon.startsWith('http')" [src]="imgIcon"class="w-10 h-10"/>
     </ng-container>
 
     <!-- Button Text -->
