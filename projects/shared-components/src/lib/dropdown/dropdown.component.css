@@ -1,0 +1,43 @@
+.form-control {
+    display: flex;
+    gap: 0.8rem;
+  }
+  .dropdown {
+    padding: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #a3a3a3;
+    background-color: white;
+    height: 4.8rem;
+    border-radius: 0.75rem; 
+  }
+  .shadow {
+    box-shadow: 0px 0px 10px gray;
+  }
+  .text-dark {
+    color: #000;
+  }
+  .text-gray {
+    color: #737373;
+  }
+  .dropdown-content {
+    position: absolute;
+    top: 100%;
+    margin-top: 0.5rem;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  }
+  /* 
+  .form-control p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } */
+  
+  .truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  

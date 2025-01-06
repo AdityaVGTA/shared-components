@@ -31,11 +31,21 @@ export class CheckBoxComponent {
     data: [],
   };
   @Input() size = 'medium';
+  @Input() orientation:'vertical'|'horizontal' = 'vertical'
+
   @Output() dataEvent = new EventEmitter<any>();
 
   infoImgPath = './assets/icons/info.png';
   crossImgPath = './assets/icons/cross.png';
   checkImgPath = './assets/icons/check.png';
+
+  downImgPath = './assets/icons/down.svg';  
+  upImgPath = './assets/icons/up.svg';  
+  drop = true  
+
+  toggleOptions(){    
+    this.drop = !this.drop  
+  } 
 
   sendData() {
     this.dataEvent.emit(this.data);

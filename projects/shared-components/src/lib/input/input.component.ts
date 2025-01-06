@@ -27,11 +27,10 @@ export class InputComponent implements ControlValueAccessor, OnInit{
   @Input() validationMessage = '';
   @Input() getErrorMessage = '';
   @Input() inputIcon: string[] = [];
-
   @Output() helperButtonAction = new EventEmitter<Event>();
   @Output() secondaryButtonAction = new EventEmitter<Event>();
   icons: string[] = [];
-  inputValue = '';
+  @Input() inputValue = '';
   getInputTypeValue = '';
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
@@ -139,11 +138,11 @@ export class InputComponent implements ControlValueAccessor, OnInit{
         this.icons=this.inputIcon
         break;
       case 'password':
-        this.icons.push('assets/icons/lock-password.png', 'assets/icons/eye.png');
+        this.icons.push('assets/icons/lock-password.svg', 'assets/icons/eye.svg');
         // this.icons=this.inputIcon
         break;
       case 'phone-number':
-        this.icons.push('assets/icons/phone.png');
+        this.icons.push('assets/icons/phone.svg');
         break;
     }
   }

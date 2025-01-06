@@ -1,8 +1,13 @@
-.tab-to-list {
-    padding-left: 1rem;
+.vertical {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+}
+
+.horizontal {
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
 }
 
 .list-of-checkbox {
@@ -150,6 +155,7 @@
     }
 
     &:checked {
+        background-color: var(--color-secondary-5);
         border-style: none;
     }
 

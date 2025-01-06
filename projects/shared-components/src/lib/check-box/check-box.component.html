@@ -1,114 +1,53 @@
-<div class="h-auto w-96 border border-black p-4">
-    <section *ngIf="multiSelect" [ngClass]="size" class="flex flex-col gap-4">
-      <div *ngIf="data.header" class="flex items-center gap-2">
-        <input
-          type="checkbox"
-          class="checkbox"
-          [ngClass]="headerCheckClass"
-          [id]="data.header.label"
-          [checked]="data.header.checked"
-          (change)="toggleSelectAll($event)"
-          [value]="data.header.label"
-        />
-        <label [for]="data.header.label"> {{ data.header.label }} </label>
-      </div>
-  
-      <ol class="tab-to-list">
-        <li *ngFor="let itr of data.data; let i = index" class="gap-0">
-          <div class="flex items-center gap-2">
-            <input
-              type="checkbox"
-              class="checkbox checkedClass"
-              [(ngModel)]="itr.checked"
-              (change)="toggleCheckbox(i, $event)"
-              [id]="itr.label"
-              [value]="itr.label"
-              *ngIf="itr.disabled"
-              disabled
-            />
-            <input
-              type="checkbox"
-              class="checkbox checkedClass"
-              [(ngModel)]="itr.checked"
-              (change)="toggleCheckbox(i, $event)"
-              [id]="itr.label"
-              [value]="itr.label"
-              *ngIf="!itr.disabled"
-            />
-            <label [for]="itr.label"> {{ itr.label }} </label>
-          </div>
-          <div [ngSwitch]="itr.type" *ngIf="itr.type">
-            <span class="flex text-success-text items-center gap-2" *ngSwitchCase="'success'">
-              <div class="bg-success rounded-full w-fit h-fit body_sans_s">
-                <img [src]="checkImgPath" alt="check" />
-              </div>
-              {{ itr.message }}
-            </span>
-            <span class="flex text-error-text items-center gap-2" *ngSwitchCase="'error'">
-              <div class="bg-error rounded-full w-fit h-fit body_sans_s">
-                <img [src]="crossImgPath" alt="cross" />
-              </div>
-              {{ itr.message }}
-            </span>
-            <span class="flex text-warning-text items-center gap-2" *ngSwitchCase="'warning'">
-              <div class="bg-warning rounded-full w-fit h-fit body_sans_s">
-                <img [src]="infoImgPath" alt="info" />
-              </div>
-              {{ itr.message }}
-            </span>
-          </div>
-          <span class="text-neutral-500" *ngIf="itr.helper"> {{ itr.helper }} </span>
-        </li>
-      </ol>
-    </section>
-  
-    <section *ngIf="!multiSelect" [ngClass]="size">
-      <ol class="tab-to-list">
-        <li *ngFor="let itr of data.data; let i = index" class="gap-0">
-          <div class="flex items-center gap-2">
-            <input
-              type="checkbox"
-              class="checkbox checkedClass"
-              [(ngModel)]="itr.checked"
-              (change)="toggleCheckbox(i, $event)"
-              [id]="itr.label"
-              [value]="itr.label"
-              *ngIf="itr.disabled"
-              disabled
-            />
-            <input
-              type="checkbox"
-              class="checkbox checkedClass"
-              [(ngModel)]="itr.checked"
-              (change)="toggleCheckbox(i, $event)"
-              [id]="itr.label"
-              [value]="itr.label"
-              *ngIf="!itr.disabled"
-            />
-            <label [for]="itr.label"> {{ itr.label }} </label>
-          </div>
-          <div [ngSwitch]="itr.type" *ngIf="itr.type">
-            <span class="flex text-success-text items-center gap-2" *ngSwitchCase="'success'">
-              <div class="bg-success rounded-full w-fit h-fit body_sans_s">
-                <img [src]="checkImgPath" alt="check" />
-              </div>
-              {{ itr.message }}
-            </span>
-            <span class="flex text-error-text items-center gap-2" *ngSwitchCase="'error'">
-              <div class="bg-error rounded-full w-fit h-fit body_sans_s">
-                <img [src]="crossImgPath" alt="cross" />
-              </div>
-              {{ itr.message }}
-            </span>
-            <span class="flex text-warning-text items-center gap-2" *ngSwitchCase="'warning'">
-              <div class="bg-warning rounded-full w-fit h-fit body_sans_s">
-                <img [src]="infoImgPath" alt="info" />
-              </div>
-              {{ itr.message }}
-            </span>
-          </div>
-          <span class="text-neutral-500" *ngIf="itr.helper"> {{ itr.helper }} </span>
-        </li>
-      </ol>
-    </section>
-  </div>
+<div class="h-auto p-4">
+  <section *ngIf="multiSelect" [ngClass]="size" class="flex flex-col gap-4">
+    <div *ngIf="data.header" class="flex justify-between items-center gap-x-8" (click)="toggleOptions()">
+      <div class="flex items-center gap-2"> <input type="checkbox" class="checkbox" [ngClass]="headerCheckClass"
+          [id]="data.header.label" [checked]="data.header.checked" (change)="toggleSelectAll($event)"
+          [value]="data.header.label" /> <label [for]="data.header.label"> {{ data.header.label }} </label> </div> <img
+        [src]="downImgPath" alt="Down Arrow" *ngIf="drop" class="w-4"> <img [src]="upImgPath" alt="Up Arrow"
+        *ngIf="!drop" class="w-4">
+    </div>
+    <ol [ngClass]='orientation' style="padding-left: 1rem;" *ngIf="!drop">
+      <li *ngFor="let itr of data.data; let i = index" class="gap-0">
+        <div class="flex items-center gap-2"> <input type="checkbox" class="checkbox checkedClass"
+            [(ngModel)]="itr.checked" (change)="toggleCheckbox(i, $event)" [id]="itr.label" [value]="itr.label"
+            *ngIf="itr.disabled" disabled /> <input type="checkbox" class="checkbox checkedClass"
+            [(ngModel)]="itr.checked" (change)="toggleCheckbox(i, $event)" [id]="itr.label" [value]="itr.label"
+            *ngIf="!itr.disabled" /> <label [for]="itr.label"> {{ itr.label }} </label> </div>
+        <div [ngSwitch]="itr.type" *ngIf="itr.type"> <span class="flex text-success-text items-center gap-2"
+            *ngSwitchCase="'success'">
+            <div class="bg-success rounded-full w-fit h-fit body_sans_s"> <img [src]="checkImgPath" alt="check" />
+            </div> {{ itr.message }}
+          </span> <span class="flex text-error-text items-center gap-2" *ngSwitchCase="'error'">
+            <div class="bg-error rounded-full w-fit h-fit body_sans_s"> <img [src]="crossImgPath" alt="cross" /> </div>
+            {{ itr.message }}
+          </span> <span class="flex text-warning-text items-center gap-2" *ngSwitchCase="'warning'">
+            <div class="bg-warning rounded-full w-fit h-fit body_sans_s"> <img [src]="infoImgPath" alt="info" /> </div>
+            {{ itr.message }}
+          </span> </div> <span class="text-neutral-500" *ngIf="itr.helper"> {{ itr.helper }} </span>
+      </li>
+    </ol>
+  </section>
+  <section *ngIf="!multiSelect" [ngClass]="size">
+    <ol [ngClass]='orientation'>
+      <li *ngFor="let itr of data.data; let i = index" class="gap-0">
+        <div class="flex items-center gap-2"> <input type="checkbox" class="checkbox checkedClass"
+            [(ngModel)]="itr.checked" (change)="toggleCheckbox(i, $event)" [id]="itr.label" [value]="itr.label"
+            *ngIf="itr.disabled" disabled /> <input type="checkbox" class="checkbox checkedClass"
+            [(ngModel)]="itr.checked" (change)="toggleCheckbox(i, $event)" [id]="itr.label" [value]="itr.label"
+            *ngIf="!itr.disabled" /> <label [for]="itr.label"> {{ itr.label }} </label> </div>
+        <div [ngSwitch]="itr.type" *ngIf="itr.type"> <span class="flex text-success-text items-center gap-2"
+            *ngSwitchCase="'success'">
+            <div class="bg-success rounded-full w-fit h-fit body_sans_s"> <img [src]="checkImgPath" alt="check" />
+            </div> {{ itr.message }}
+          </span> <span class="flex text-error-text items-center gap-2" *ngSwitchCase="'error'">
+            <div class="bg-error rounded-full w-fit h-fit body_sans_s"> <img [src]="crossImgPath" alt="cross" /> </div>
+            {{ itr.message }}
+          </span> <span class="flex text-warning-text items-center gap-2" *ngSwitchCase="'warning'">
+            <div class="bg-warning rounded-full w-fit h-fit body_sans_s"> <img [src]="infoImgPath" alt="info" /> </div>
+            {{ itr.message }}
+          </span> </div> <span class="text-neutral-500" *ngIf="itr.helper"> {{ itr.helper }} </span>
+      </li>
+    </ol>
+  </section>
+</div>
