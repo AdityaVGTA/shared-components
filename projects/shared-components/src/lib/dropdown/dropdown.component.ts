@@ -1,13 +1,14 @@
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, HostListener, Input, Output , OnInit} from '@angular/core';
 
 @Component({
   selector: 'lib-dropdown',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './dropdown.component.html',
   styleUrl: './dropdown.component.css'
 })
-export class DropdownComponent {
+export class DropdownComponent implements OnInit {
   @Input() data!: {
     header: string;
     placeholder_text: string;
