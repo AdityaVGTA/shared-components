@@ -1,6 +1,6 @@
 <div class="form-control flex-col flex-1 body_sans_s" *ngIf="type=='selectbox'">
-    <span class="body_sans_s">{{testData.header}}</span>
-    <div class="p-5 flex justify-between border border-neutral-400 bg-white h-[4.8rem] rounded-xl relative body_sans_m"
+    <span class="body_sans_s pb-3" *ngIf="testData.header">{{testData.header}}</span>
+    <div class="p-5 flex justify-between items-center border border-neutral-400 bg-white h-[4rem] rounded-xl relative body_sans_m cursor-pointer"
         (click)="openDropdown($event)">
         <p
             [ngClass]="{'text-dark ': selectedReason !== this.testData.placeholder_text,'text-gray': selectedReason === this.testData.placeholder_text,}">
@@ -19,8 +19,8 @@
 </div>
 
 <div class="form-control flex-col flex-1 body_sans_s" *ngIf="type === 'multiSelectbox'">
-    <span class="body_sans_s">{{ testData.header }}</span>
-    <div class="p-5 flex justify-between items-center border border-neutral-400 bg-white h-[4.8rem] rounded-xl relative cursor-pointer"
+    <span class="body_sans_s pb-3" *ngIf="testData.header">{{testData.header}}</span>
+    <div class="p-5 flex justify-between items-center border border-neutral-400 bg-white h-[4rem] rounded-xl relative cursor-pointer body_sans_m"
         (click)="openDropdown($event)">
         <p class="flex items-center max-w-full truncate">
             <ng-container *ngIf="selectedMultiReason.length == 0">
@@ -35,7 +35,7 @@
             </ng-container>
         </p>
         <img [src]="dropDown ? upArrowImg : downArrowImg" alt="Toggle" />
-        <div class="dropdown-content absolute left-0 w-full shadow rounded-[1.2rem] px-5 py-6 bg-white z-10 flex flex-col gap-3  max-h-[26rem] overflow-auto custom-scrollbar"
+        <div class="dropdown-content absolute left-0 w-full shadow rounded-[1.2rem] px-5 py-6 bg-white z-10 flex flex-col gap-3 max-h-[26rem] overflow-auto custom-scrollbar"
             *ngIf="dropDown" (click)="$event.stopPropagation()">
             <div *ngFor="let reason of testData.options"
                 class="flex items-center gap-3 cursor-pointer py-[1.5rem] px-[1.25rem] rounded-lg hover:bg-secondary-bg-1"

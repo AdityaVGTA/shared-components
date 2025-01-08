@@ -1,6 +1,5 @@
 .form-control {
     display: flex;
-    gap: 0.8rem;
   }
   .dropdown {
     padding: 1.25rem;
@@ -41,3 +40,7 @@
     white-space: nowrap;
   }
   
+  img{
+    height: 1.3rem;
+    width: 2.4rem
+  }
