@@ -39,10 +39,9 @@ export class DropdownComponent implements OnInit, OnDestroy {
     this.selectedReason = this.testData.placeholder_text;
     this.patchValue();
 
-    // Subscribe to service for active dropdown changes
     this.dropdownSubscription = this.dropdownService.activeDropdownId$.subscribe((activeId) => {
       if (activeId !== this.id) {
-        this.dropDown = false; // Close if not the active dropdown
+        this.dropDown = false;
       }
     });
   }
@@ -70,24 +69,23 @@ export class DropdownComponent implements OnInit, OnDestroy {
     event.stopPropagation();
 
     if (this.dropdownService.isDropdownActive(this.id)) {
-      this.dropdownService.setActiveDropdown(null); // Deactivate if already active
+      this.dropdownService.setActiveDropdown(null);
       this.dropDown = false;
     } else {
-      this.dropdownService.setActiveDropdown(this.id); // Activate current dropdown
+      this.dropdownService.setActiveDropdown(this.id);
       this.dropDown = true;
     }
   }
 
   selectReason(reason: string) {
     this.selectedReason = reason;
-    this.valueSelected.emit(reason);
-    console.log(`Dropdown "${this.id}" - Selected reason: ${reason}`);
-
+    this.valueSelected.emit(reason);    
     if (this.type === 'selectbox') {
-      // Close dropdown for single-select
-      this.closeDropdownManually();  // Manually close the dropdown
+      this.dropDown = false
+      this.dropdownService.isDropdownActive(this.id)
     }
   }
+
   selectMultiReason(reason: string) {
     const present = this.selectedMultiReason.includes(reason);
     if (present) {
@@ -109,6 +107,12 @@ export class DropdownComponent implements OnInit, OnDestroy {
   private closeDropdownManually() {
     this.dropdownService.setActiveDropdown(null);
     this.dropDown = false;
+  }
+
+  handleKeyPress(event:KeyboardEvent){
+    if(this.dropDown){
+      console.log(event.key);
+    }
   }
 
   ngOnDestroy() {

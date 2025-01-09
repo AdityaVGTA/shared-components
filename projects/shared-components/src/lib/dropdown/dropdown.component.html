@@ -1,12 +1,12 @@
 <div class="form-control flex-col flex-1 body_sans_s" *ngIf="type=='selectbox'">
     <span class="body_sans_s pb-3" *ngIf="testData.header">{{testData.header}}</span>
     <div class="p-5 flex justify-between items-center border border-neutral-400 bg-white h-[4rem] rounded-xl relative body_sans_m cursor-pointer"
-        (click)="openDropdown($event)">
+        (click)="openDropdown($event)" (keyup)="handleKeyPress($event)">
         <p
             [ngClass]="{'text-dark ': selectedReason !== this.testData.placeholder_text,'text-gray': selectedReason === this.testData.placeholder_text,}">
             {{ selectedReason }}
         </p>
-        <img [src]="dropDown ? upArrowImg : downArrowImg" alt="Toggle" /><!-- Dropdown content -->
+        <img [src]="dropDown ? upArrowImg : downArrowImg" alt="Toggle"/>
         <div class="dropdown-content absolute left-0 w-full shadow rounded-[1.2rem] px-5 py-6 bg-white flex flex-col gap-3 max-h-[26rem] overflow-auto custom-scrollbar"
             *ngIf="dropDown">
             <p class="w-full hover:bg-secondary-bg-1 rounded-xl body_sans_m px-5 py-6 active:bg-secondary-bg-1"
