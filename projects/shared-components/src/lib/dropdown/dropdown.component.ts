@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, HostListener, Input, Output, OnInit, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
 import { SharedComponentsService } from '../shared-components.service';
 import { Subscription } from 'rxjs';
 
@@ -44,6 +44,10 @@ export class DropdownComponent implements OnInit, OnDestroy {
         this.dropDown = false;
       }
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.testData = this.data;
   }
 
   patchValue() {
