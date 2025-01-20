@@ -32,6 +32,8 @@ export class InputComponent implements ControlValueAccessor, OnInit{
   icons: string[] = [];
   @Input() inputValue = '';
   getInputTypeValue = '';
+  isPasswordVisible = false;  // New flag to track visibility
+
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
  
@@ -98,12 +100,16 @@ export class InputComponent implements ControlValueAccessor, OnInit{
   // Method for handling the secondary button click event
   secondaryImageFunction(): void {
     if (this.inputType === 'password') {
-      // Toggle password visibility
-      this.getInputTypeValue =
-        this.getInputTypeValue === 'password' ? 'text' : 'password';
+      this.isPasswordVisible = !this.isPasswordVisible;
+      this.getInputTypeValue = this.isPasswordVisible ? 'text' : 'password';
+
+      // Update the eye icon dynamically
+      this.icons = [
+        'assets/icons/lock-password.svg',
+        this.isPasswordVisible ? 'assets/icons/eye-closed.svg' : 'assets/icons/eye.svg'
+      ];
     } else {
-      // Emit event to parent when not a password input
-      this.secondaryButtonAction.emit(); // Emit event to the parent that the button is clicked
+      this.secondaryButtonAction.emit();
     }
   }
 
@@ -134,17 +140,19 @@ export class InputComponent implements ControlValueAccessor, OnInit{
   initializeIcons() {
     switch (this.inputType) {
       case 'default':
-        // this.icons.push('assets/icons/Profile-circle.png', 'assets/icons/microphone.png');
-        this.icons=this.inputIcon
+        this.icons = this.inputIcon;
         break;
       case 'password':
-        this.icons.push('assets/icons/lock-password.svg', 'assets/icons/eye.svg');
-        // this.icons=this.inputIcon
+        this.icons = [
+          'assets/icons/lock-password.svg',
+          this.isPasswordVisible ? 'assets/icons/eye-closed.svg' : 'assets/icons/eye.svg'
+        ];
         break;
       case 'phone-number':
-        this.icons.push('assets/icons/phone.svg');
+        this.icons = ['assets/icons/phone.svg'];
         break;
     }
   }
+
  
 }

@@ -1,50 +1,54 @@
-<div class="form-control flex-col flex-1 body_sans_s" *ngIf="type=='selectbox'">
-    <span class="body_sans_s pb-3" *ngIf="testData.header">{{testData.header}}</span>
-    <div class="p-5 flex justify-between items-center border border-neutral-400 bg-white h-[4rem] rounded-xl relative body_sans_m cursor-pointer"
-        (click)="openDropdown($event)" (keyup)="handleKeyPress($event)">
-        <p
-            [ngClass]="{'text-dark ': selectedReason !== this.testData.placeholder_text,'text-gray': selectedReason === this.testData.placeholder_text,}">
-            {{ selectedReason }}
+<div class="dropdown-control flex-col flex-1 body_sans_s" *ngIf="type == 'selectbox'">
+    <span class="body_sans_s pb-3" *ngIf="testData.header">{{ testData.header }}</span>
+    <div class="p-5 flex justify-between items-center border border-neutral-400 bg-white h-[4rem] rounded-xl relative body_sans_s cursor-pointer"
+      (click)="openDropdown($event)" (keyup)="handleKeyPress($event)">
+      <p [ngClass]="{
+        'text-dark': selectedReason !== this.testData.placeholder_text,
+        'text-gray': selectedReason === this.testData.placeholder_text
+      }">
+        {{ selectedReason }}
+      </p>
+      <img [src]="dropDown ? upArrowImg : downArrowImg" alt="Toggle" />
+      <div class="dropdown-content absolute left-0 w-full shadow rounded-[1.2rem] px-5 py-6 bg-white flex flex-col gap-3 max-h-[26rem] overflow-auto custom-scrollbar"
+        [ngStyle]="{'top': dropdownPosition === 'bottom' ? '100%' : 'auto', 'bottom': dropdownPosition === 'top' ? '100%' : 'auto'}"
+        *ngIf="dropDown">
+        <p class="w-full hover:bg-secondary-bg-1 rounded-xl body_sans_s px-5 py-6 active:bg-secondary-bg-1"
+          *ngFor="let reason of testData.options" (click)="selectReason(reason)"
+          [ngClass]="{'bg-secondary-bg-1': selectedReason === reason}">
+          {{ reason }}
         </p>
-        <img [src]="dropDown ? upArrowImg : downArrowImg" alt="Toggle"/>
-        <div class="dropdown-content absolute left-0 w-full shadow rounded-[1.2rem] px-5 py-6 bg-white flex flex-col gap-3 max-h-[26rem] overflow-auto custom-scrollbar"
-            *ngIf="dropDown">
-            <p class="w-full hover:bg-secondary-bg-1 rounded-xl body_sans_m px-5 py-6 active:bg-secondary-bg-1"
-                *ngFor="let reason of testData.options" (click)="selectReason(reason)"
-                [ngClass]="{'bg-secondary-bg-1': selectedReason === reason}">
-                {{ reason }}
-            </p>
-        </div>
+      </div>
     </div>
-</div>
-
-<div class="form-control flex-col flex-1 body_sans_s" *ngIf="type === 'multiSelectbox'">
-    <span class="body_sans_s pb-3" *ngIf="testData.header">{{testData.header}}</span>
-    <div class="p-5 flex justify-between items-center border border-neutral-400 bg-white h-[4rem] rounded-xl relative cursor-pointer body_sans_m"
-        (click)="openDropdown($event)">
-        <p class="flex items-center max-w-full truncate">
-            <ng-container *ngIf="selectedMultiReason.length == 0">
-                <p class="text-gray body_sans_m">
-                    {{ testData.placeholder_text }}
-                </p>
-            </ng-container>
-            <ng-container *ngIf="selectedMultiReason.length > 0">
-                <span class="text-dark body_sans_m truncate pr-4" [title]="selectedMultiReason.join(', ')">
-                    {{ selectedMultiReason.join(', ') }}
-                </span>
-            </ng-container>
-        </p>
-        <img [src]="dropDown ? upArrowImg : downArrowImg" alt="Toggle" />
-        <div class="dropdown-content absolute left-0 w-full shadow rounded-[1.2rem] px-5 py-6 bg-white z-10 flex flex-col gap-3 max-h-[26rem] overflow-auto custom-scrollbar"
-            *ngIf="dropDown" (click)="$event.stopPropagation()">
-            <div *ngFor="let reason of testData.options"
-                class="flex items-center gap-3 cursor-pointer py-[1.5rem] px-[1.25rem] rounded-lg hover:bg-secondary-bg-1"
-                [ngClass]="{ 'bg-secondary-bg-1': selectedMultiReason.includes(reason) }"
-                (click)="selectMultiReason(reason)">
-                <input type="checkbox" [checked]="selectedMultiReason.includes(reason)" class="w-7 h-7" />
-                <p class="body_sans_m truncate">{{ reason }}</p>
-            </div>
+  </div>
+  
+  <div class="dropdown-control flex-col flex-1 body_sans_s" *ngIf="type === 'multiSelectbox'">
+    <span class="body_sans_s pb-3" *ngIf="testData.header">{{ testData.header }}</span>
+    <div class="p-5 flex justify-between items-center border border-neutral-400 bg-white h-[4rem] rounded-xl relative cursor-pointer body_sans_s"
+      (click)="openDropdown($event)">
+      <p class="flex items-center max-w-full truncate">
+        <ng-container *ngIf="selectedMultiReason.length == 0">
+          <p class="text-gray body_sans_s">
+            {{ testData.placeholder_text }}
+          </p>
+        </ng-container>
+        <ng-container *ngIf="selectedMultiReason.length > 0">
+          <span class="text-dark body_sans_s truncate pr-4" [title]="selectedMultiReason.join(', ')">
+            {{ selectedMultiReason.join(', ') }}
+          </span>
+        </ng-container>
+      </p>
+      <img [src]="dropDown ? upArrowImg : downArrowImg" alt="Toggle" />
+      <div class="dropdown-content absolute left-0 w-full shadow rounded-[1.2rem] px-5 py-6 bg-white z-10 flex flex-col gap-3 max-h-[26rem] overflow-auto custom-scrollbar"
+        *ngIf="dropDown" (click)="$event.stopPropagation()" 
+        [ngStyle]="{'top': dropdownPosition === 'bottom' ? '100%' : 'auto', 'bottom': dropdownPosition === 'top' ? '100%' : 'auto'}">
+        <div *ngFor="let reason of testData.options"
+          class="flex items-center gap-3 cursor-pointer py-[1.5rem] px-[1.25rem] rounded-lg hover:bg-secondary-bg-1"
+          [ngClass]="{ 'bg-secondary-bg-1': selectedMultiReason.includes(reason) }"
+          (click)="selectMultiReason(reason)">
+          <input type="checkbox" [checked]="selectedMultiReason.includes(reason)" class="w-7 h-7" />
+          <p class="body_sans_s truncate">{{ reason }}</p>
         </div>
+      </div>
     </div>
-</div>
-
+  </div>
+  

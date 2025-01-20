@@ -65,7 +65,6 @@ export class CheckBoxComponent {
     if (this.data)
       this.data.data.forEach((checkbox) => {
         if (!checkbox.disabled) {
-          console.log(selectAll);
           checkbox.checked = selectAll;
         }
       });
@@ -99,8 +98,6 @@ export class CheckBoxComponent {
       }
 
       this.sendData();
-    } else {
-      console.log('Data for the checkbox has not provided.');
     }
   }
 }

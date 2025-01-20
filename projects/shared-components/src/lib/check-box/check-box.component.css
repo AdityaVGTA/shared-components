@@ -7,7 +7,7 @@
 .horizontal {
     display: flex;
     flex-direction: row;
-    gap: 4rem;
+    gap: 2rem;
     flex-wrap: wrap;
 }
 

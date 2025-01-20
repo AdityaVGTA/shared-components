@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, HostListener, Input, Output, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output, OnInit, OnDestroy, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
 import { SharedComponentsService } from '../shared-components.service';
 import { Subscription } from 'rxjs';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'lib-dropdown',
@@ -10,7 +11,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './dropdown.component.html',
   styleUrl: './dropdown.component.css',
 })
-export class DropdownComponent implements OnInit, OnDestroy {
+export class DropdownComponent implements OnInit, OnDestroy, OnChanges {
   private dropdownSubscription!: Subscription;
 
   @Input() data!: {
@@ -22,17 +23,18 @@ export class DropdownComponent implements OnInit, OnDestroy {
   @Input() type: 'selectbox' | 'multiSelectbox' = 'selectbox';
   @Output() valueSelected = new EventEmitter<string>();
   @Output() multiValueSelected = new EventEmitter<string[]>();
-  @Input() id!: string; // Add an ID for each dropdown
+  @Input() id!: string;
 
   testData: any;
   selectedReason!: string;
   selectedMultiReason: string[] = [];
   dropDown = false;
+  dropdownPosition: 'top' | 'bottom' = 'bottom';
 
   upArrowImg = './assets/icons/up.svg';
   downArrowImg = './assets/icons/down.svg';
 
-  constructor(private dropdownService: SharedComponentsService) {}
+  constructor(private dropdownService: SharedComponentsService, private elementRef: ElementRef, private cdRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.testData = this.data;
@@ -47,23 +49,23 @@ export class DropdownComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.testData = this.data;
+    if (changes['data'] && changes['data'].currentValue !== changes['data'].previousValue) {
+      this.testData = this.data;
+      this.patchValue();
+    }
   }
 
   patchValue() {
     if (this.testData.selectedValue) {
       if (this.type === 'selectbox' && typeof this.testData.selectedValue === 'string') {
-        const valuePresent = this.testData.options.includes(this.testData.selectedValue);
-        if (valuePresent) {
+        if (this.testData.options.includes(this.testData.selectedValue)) {
           this.selectedReason = this.testData.selectedValue;
           this.valueSelected.emit(this.selectedReason);
         }
-      } else {
-        if (this.testData.selectedValue.length > 0) {
-          for (let value of this.testData.selectedValue) {
-            this.selectedMultiReason.push(value);
-          }
-        }
+      } else if (Array.isArray(this.testData.selectedValue)) {
+        this.selectedMultiReason = this.testData.selectedValue.filter((val: string) =>
+          this.testData.options.includes(val)
+        );
         this.multiValueSelected.emit(this.selectedMultiReason);
       }
     }
@@ -72,27 +74,29 @@ export class DropdownComponent implements OnInit, OnDestroy {
   openDropdown(event: MouseEvent) {
     event.stopPropagation();
 
+    if (this.dropDown) {
+      return; // Prevent re-opening
+    }
+
     if (this.dropdownService.isDropdownActive(this.id)) {
-      this.dropdownService.setActiveDropdown(null);
-      this.dropDown = false;
+      this.closeDropdownManually();
     } else {
       this.dropdownService.setActiveDropdown(this.id);
       this.dropDown = true;
+      this.adjustDropdownPosition();
     }
   }
 
   selectReason(reason: string) {
     this.selectedReason = reason;
-    this.valueSelected.emit(reason);    
-    if (this.type === 'selectbox') {
-      this.dropDown = false
-      this.dropdownService.isDropdownActive(this.id)
+    this.valueSelected.emit(reason);
+    setTimeout(() => {
+      this.closeDropdownManually(); // Delayed close
+    }, 0);
     }
-  }
 
   selectMultiReason(reason: string) {
-    const present = this.selectedMultiReason.includes(reason);
-    if (present) {
+    if (this.selectedMultiReason.includes(reason)) {
       this.selectedMultiReason = this.selectedMultiReason.filter((item) => item !== reason);
     } else {
       this.selectedMultiReason.push(reason);
@@ -100,10 +104,26 @@ export class DropdownComponent implements OnInit, OnDestroy {
     this.multiValueSelected.emit(this.selectedMultiReason);
   }
 
+  adjustDropdownPosition() {
+    if (!this.dropDown) return;
+
+    setTimeout(() => {
+      const dropdown = this.elementRef.nativeElement.querySelector('.dropdown-content');
+      const selectBox = this.elementRef.nativeElement.querySelector('.dropdown-control');
+
+      if (!dropdown || !selectBox) return;
+
+      const rect = selectBox.getBoundingClientRect();
+      const availableSpaceBelow = window.innerHeight - rect.bottom;
+      const dropdownHeight = dropdown.scrollHeight;
+
+      this.dropdownPosition = dropdownHeight > availableSpaceBelow ? 'top' : 'bottom';
+    });
+  }
+
   @HostListener('document:click', ['$event'])
   closeDropdown(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.form-control') && this.dropDown) {
+    if (!this.elementRef.nativeElement.contains(event.target) && this.dropDown) {
       this.closeDropdownManually();
     }
   }
@@ -111,11 +131,19 @@ export class DropdownComponent implements OnInit, OnDestroy {
   private closeDropdownManually() {
     this.dropdownService.setActiveDropdown(null);
     this.dropDown = false;
+    this.cdRef.markForCheck(); // Mark for update in next cycle
+
   }
 
-  handleKeyPress(event:KeyboardEvent){
-    if(this.dropDown){
-      console.log(event.key);
+  @HostListener('window:resize')
+  @HostListener('document:scroll')
+  onResizeOrScroll() {
+    this.adjustDropdownPosition();
+  }
+
+  handleKeyPress(event: KeyboardEvent) {
+    if (this.dropDown && event.key === 'Escape') {
+      this.closeDropdownManually();
     }
   }
 

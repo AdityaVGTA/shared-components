@@ -21,7 +21,7 @@ export class ButtonComponent {
 
   // Function to combine base classes with variant and size-specific classes
   get buttonClasses(): string {
-    const baseClasses = `group flex items-center justify-center rounded-lg web:ring-offset-background web:transition-colors web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2`;
+    const baseClasses = `group flex items-center justify-center rounded-[0.8rem] web:ring-offset-background web:transition-colors web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2`;
     const variantClasses = this.getVariantClasses();
     const sizeClasses = this.getSizeClasses();
     const positionClasses = this.getPositionClasses();

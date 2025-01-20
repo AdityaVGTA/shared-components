@@ -11,7 +11,6 @@ export class SharedComponentsService {
   constructor() { }
 
   setActiveDropdown(id: string | null): void {
-    console.log('Setting active dropdown to:', id);
     this.activeDropdownIdSource.next(id); // Emit the new active dropdown ID
   }
 
@@ -21,7 +20,6 @@ export class SharedComponentsService {
 
   isDropdownActive(id: string): boolean {
     const activeId = this.getActiveDropdown();
-    console.log(`Is dropdown "${id}" active?`, activeId === id);
     return activeId === id;
   }
 }

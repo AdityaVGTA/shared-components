@@ -1,9 +1,10 @@
 <div class="h-auto p-4">
     <section *ngIf="multiSelect" [ngClass]="size" class="flex flex-col gap-4">
         <div *ngIf="data.header" class="flex justify-between items-center gap-x-8">
-            <div class="flex items-center gap-2"> <input type="checkbox" class="checkbox" [ngClass]="headerCheckClass"
-                    [id]="data.header.label" [checked]="data.header.checked" (change)="toggleSelectAll($event)"
-                    [value]="data.header.label" /> <label (click)="toggleOptions()"> {{ data.header.label }} </label>
+            <div class="flex items-center gap-2"> 
+                <input type="checkbox" class="checkbox" [ngClass]="headerCheckClass" [id]="data.header.label" [checked]="data.header.checked" (change)="toggleSelectAll($event)"
+                    [value]="data.header.label" />
+                    <label (click)="toggleOptions()" class="text-[#414141]"> {{ data.header.label }} </label>
             </div> <img [src]="downImgPath" alt="Down Arrow" *ngIf="drop" class="w-4" (click)="toggleOptions()" /> <img
                 [src]="upImgPath" alt="Up Arrow" *ngIf="!drop" class="w-4" (click)="toggleOptions()" />
         </div>
@@ -13,7 +14,7 @@
                         [(ngModel)]="itr.checked" (change)="toggleCheckbox(i, $event)" [id]="itr.label"
                         [value]="itr.label" *ngIf="itr.disabled" disabled /> <input type="checkbox"
                         class="checkbox checkedClass" [(ngModel)]="itr.checked" (change)="toggleCheckbox(i, $event)"
-                        [id]="itr.label" [value]="itr.label" *ngIf="!itr.disabled" /> <label [for]="itr.label"> {{
+                        [id]="itr.label" [value]="itr.label" *ngIf="!itr.disabled" /> <label [for]="itr.label" class="text-[#414141]"> {{
                         itr.label }} </label> </div>
                 <div [ngSwitch]="itr.type" *ngIf="itr.type"> <span class="flex text-success-text items-center gap-2"
                         *ngSwitchCase="'success'">
@@ -36,7 +37,7 @@
                         [(ngModel)]="itr.checked" (change)="toggleCheckbox(i, $event)" [id]="itr.label"
                         [value]="itr.label" *ngIf="itr.disabled" disabled /> <input type="checkbox"
                         class="checkbox checkedClass" [(ngModel)]="itr.checked" (change)="toggleCheckbox(i, $event)"
-                        [id]="itr.label" [value]="itr.label" *ngIf="!itr.disabled" /> <label [for]="itr.label"> {{
+                        [id]="itr.label" [value]="itr.label" *ngIf="!itr.disabled" /> <label [for]="itr.label" class="text-[#414141]"> {{
                         itr.label }} </label> </div>
                 <div [ngSwitch]="itr.type" *ngIf="itr.type"> <span class="flex text-success-text items-center gap-2"
                         *ngSwitchCase="'success'">

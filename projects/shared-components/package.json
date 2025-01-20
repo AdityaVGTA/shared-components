@@ -1,6 +1,6 @@
 {
   "name": "@AdityaVGTA/shared-components",
-  "version": "0.5.6",
+  "version": "0.7.1",
   "description": "A reusable shared-component library for GCC",  
   "peerDependencies": {
     "@angular/common": "^18.2.0",
