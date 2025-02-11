@@ -106,7 +106,7 @@ export class InputComponent implements ControlValueAccessor, OnInit{
       // Update the eye icon dynamically
       this.icons = [
         'assets/icons/lock-password.svg',
-        this.isPasswordVisible ? 'assets/icons/eye-closed.svg' : 'assets/icons/eye.svg'
+        this.isPasswordVisible ? 'assets/icons/eye.svg' : 'assets/icons/eye-closed.svg'
       ];
     } else {
       this.secondaryButtonAction.emit();
@@ -145,7 +145,7 @@ export class InputComponent implements ControlValueAccessor, OnInit{
       case 'password':
         this.icons = [
           'assets/icons/lock-password.svg',
-          this.isPasswordVisible ? 'assets/icons/eye-closed.svg' : 'assets/icons/eye.svg'
+          this.isPasswordVisible ? 'assets/icons/eye.svg' : 'assets/icons/eye-closed.svg'
         ];
         break;
       case 'phone-number':

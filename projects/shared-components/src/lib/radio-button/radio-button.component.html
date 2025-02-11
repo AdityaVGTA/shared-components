@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-5">
+<div class="display:flex gap-5" [ngClass]="getOrientationClass()">
     <div *ngFor="let data of radioValues">
         <div class="flex flex-col gap-2">
             <div class="flex gap-2 items-center">

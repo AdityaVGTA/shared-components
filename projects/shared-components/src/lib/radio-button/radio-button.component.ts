@@ -17,6 +17,8 @@ export class RadioButtonComponent {
     state: boolean,
     disabled: boolean,
   }[];
+  @Input() orientation: 'horizontal' | 'vertical' = 'vertical';
+
   @Output() valueSelected = new EventEmitter<any>();
 
   onValueSelect(value: string) {
@@ -49,6 +51,15 @@ export class RadioButtonComponent {
             return 'body_sans_m';
       }
   }
+  
+  getOrientationClass() {
+    return {
+      'flex flex-col gap-5': this.orientation === 'vertical',
+      'flex flex-row flex-wrap items-start gap-[4rem] max-sm: gap-[2rem]': this.orientation === 'horizontal'
+    };
+  }
+
+  
 
   getRadioSize(){
       switch (this.size) {  

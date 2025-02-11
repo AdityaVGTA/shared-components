@@ -11,9 +11,9 @@
     <div class="input-wrapper">
       <div class="flex items-center"
       [ngClass]="{
-        'flex px-5 items-center justify-center': icons.length > 0}">
+        'flex relative justify-center items-center': icons.length > 0}">
         <ng-container *ngIf="icons.length > 0">
-          <img [src]="icons[0]" alt="icon" class="w-10 h-10" />
+          <img [src]="icons[0]" alt="icon" class="w-10 h-10 absolute left-4" />
         </ng-container>
  
         <!-- Handle both FormControl or ngModel depending on what is provided -->
@@ -22,18 +22,23 @@
           [formControl]="formControl"  
           [placeholder]="getPlaceholder()"
           [type]="getInputTypeValue"
-          class="input-field"
+          [ngClass]="{
+            'input-field': inputType === 'default',
+            'password-field': inputType === 'password',
+            'number-field': inputType === 'number',
+            'phone-field': inputType === 'phone-number'
+          }"          
           (input)="onInputChange($event)"  
           (blur)="onTouchedHandler()"
           [disabled]="isDisabled"
           [attr.disabled]="isDisabled ? true : null"
         />
- 
-        <ng-container *ngIf="icons.length > 1">
+          
+        <ng-container *ngIf="icons.length > 0">
           <img
             [src]="icons[1]"
             alt="icon"
-            class="w-10 h-10"
+            class="w-10 h-10 absolute right-4"
             (click)="secondaryImageFunction()"
           />
         </ng-container>

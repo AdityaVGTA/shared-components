@@ -1,47 +1,97 @@
-.dropdown-control {
-    display: flex;
-  }
-  .dropdown {
-    padding: 1.25rem;
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid #a3a3a3;
-    background-color: white;
-    height: 4.8rem;
-    border-radius: 0.75rem; 
-  }
-  .shadow {
-    box-shadow: 0px 0px 10px gray;
-  }
-  .text-dark {
-    color: #000;
-  }
-  .text-gray {
-    color: #737373;
-  }
-  .dropdown-content {
-    position: absolute;
-    top: 100%;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-    z-index: 1000;
-    background-color: white;
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  }
-  /* 
-  .form-control p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  } */
-  
-  .truncate {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  
-  img{
-    height: 1.3rem;
-    width: 2.4rem
-  }
+.dropdown-content {
+  z-index: 9999 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: absolute;
+  top: 100%;  /* Default position below */
+  left: 0;
+  width: 100%;
+  margin-top: 0.5rem;
+  max-width: 100%;
+  max-height: 26rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 1000;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.dropdown {
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #a3a3a3;
+  background-color: white;
+  height: 4.8rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown.disabled {
+  background-color: #e5e5e5;
+  border-color: #d1d1d1;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ✅ Disabled Text */
+.dropdown.disabled p {
+  color: #a3a3a3 !important;
+}
+
+/* ✅ Tooltip Fix */
+.hover-tooltip {
+  position: relative;
+  cursor: pointer;
+}
+
+.hover-tooltip:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2D3748;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 10000;
+  pointer-events: none;
+  font-size: 12px;
+  line-height: 1.2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+/* ✅ Show Tooltip on Hover */
+.hover-tooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+.truncate-single {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+/* ✅ FIX FOR MULTI-SELECT OVERFLOW */
+.truncate-multi {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hover-tooltip[data-tooltip=""],
+.hover-tooltip[data-tooltip="null"],
+.hover-tooltip[data-tooltip="undefined"] {
+  pointer-events: none;
+  visibility: hidden;
+}
